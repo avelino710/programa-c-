@@ -1,0 +1,88 @@
+
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+struct Medicamento {
+    string nome;
+    string fabricante;
+    int quantidade;
+    double preco;
+};
+
+vector<Medicamento> inventario;
+
+void adicionarMedicamento() {
+    Medicamento novoMedicamento;
+    cout << "Digite o nome do medicamento: ";
+    getline(cin, novoMedicamento.nome);
+    cout << "Digite o nome do fabricante: ";
+    getline(cin, novoMedicamento.fabricante);
+    cout << "Digite a quantidade disponível: ";
+    cin >> novoMedicamento.quantidade;
+    cout << "Digite o preço unitário: ";
+    cin >> novoMedicamento.preco;
+    inventario.push_back(novoMedicamento);
+    cout << "Medicamento adicionado ao inventário!" << endl;
+}
+
+void mostrarInventario() {
+    if (inventario.size() == 0) {
+        cout << "Inventário vazio!" << endl;
+    } else {
+        cout << "Inventário:" << endl;
+        for (int i = 0; i < inventario.size(); i++) {
+            cout << i+1 << ". " << inventario[i].nome << " (Fabricante: " << inventario[i].fabricante << ", Quantidade: " << inventario[i].quantidade << ", Preço: R$" << inventario[i].preco << ")" << endl;
+        }
+    }
+}
+
+void removerMedicamento() {
+    mostrarInventario();
+    if (inventario.size() == 0) {
+        return;
+    }
+    int escolha;
+    cout << "Digite o número do medicamento a ser removido: ";
+    cin >> escolha;
+    if (escolha < 1 || escolha > inventario.size()) {
+        cout << "Opção inválida!" << endl;
+        return;
+    }
+    inventario.erase(inventario.begin() + escolha - 1);
+    cout << "Medicamento removido do inventário!" << endl;
+}
+
+int main() {
+    int opcao;
+    do {
+        cout << "Escolha uma opção:" << endl;
+        cout << "1. Adicionar medicamento" << endl;
+        cout << "2. Mostrar inventário" << endl;
+        cout << "3. Remover medicamento" << endl;
+        cout << "0. Sair" << endl;
+        cin >> opcao;
+        cin.ignore();
+        switch (opcao) {
+            case 1:
+                adicionarMedicamento();
+                break;
+            case 2:
+                mostrarInventario();
+                break;
+            case 3:
+                removerMedicamento();
+                break;
+            case 0:
+                break;
+            default:
+                cout << "Opção inválida!" << endl;
+                break;
+        }
+    } while (opcao != 0);
+    cout << "Programa encerrado." << endl;
+    return 0;
+}
+
